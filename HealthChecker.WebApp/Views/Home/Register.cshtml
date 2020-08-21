@@ -1,0 +1,31 @@
+﻿@model UserSignUpViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Register</h1>
+
+<form action="/Home/Register" method="post">
+    <div class="form-group">
+        <label>@Model.Name</label>
+        <input name="@Model.Name" value="" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>@Model.SurName</label>
+        <input name="@Model.SurName" value="" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>@Model.UserName</label>
+        <input name="@Model.UserName" value="" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>@Model.Email</label>
+        <input name="@Model.Email" value="" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>@Model.Password</label>
+        <input name="@Model.Password" value="" class="form-control" />
+    </div>
+    <input type="submit" class="btn btn-primary" value="Kayıt Ol" />
+</form>

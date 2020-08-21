@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Abstract\IUserService.cs" />
+    <Compile Remove="Concrete\UserManager.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HealthChecker.DataAccess\HealthChecker.DataAccess.csproj" />
+    <ProjectReference Include="..\HealthChecker.Entities\HealthChecker.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
