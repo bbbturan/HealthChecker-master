@@ -87,7 +87,6 @@ namespace HealthChecker.DataAccess.Concretes
                 using (var dbContext = new ApplicationContext())
                 {
                     dbContext.TargetApps.Update(app);
-                    dbContext.SaveChanges();
                     return app;
                 }
             }

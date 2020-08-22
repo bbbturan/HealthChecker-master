@@ -15,14 +15,18 @@ using HealthChecker.WebApp.Helpers;
 using Newtonsoft.Json;
 using System.Text;
 using System.Runtime.CompilerServices;
+using HealthChecker.Business.Abstract;
+using HealthChecker.Business.Concrete;
 
 namespace HealthChecker.WebApp.Controllers
 {
     public class PanelController : Controller
     {
         public User _user = new User();
+        private ITargetAppService _appService;
         private UserManager<User> _userManager;
         private ApiHelper _apiHelper;
+        private ILogService _logService;
 
         public void FillUser()
         {
@@ -38,6 +42,7 @@ namespace HealthChecker.WebApp.Controllers
         {
             _userManager = userManager;
             _apiHelper = new ApiHelper();
+            _appService = new TargetAppManager();
         }
         
         public  IActionResult Index()
@@ -77,6 +82,46 @@ namespace HealthChecker.WebApp.Controllers
                 return RedirectToAction("Register", "Home");
             }
             return RedirectToAction("Register", "Home");
+        }
+
+        [HttpPost]
+        public IActionResult EditApp(IFormCollection form)
+        {
+            if (ModelState.IsValid)
+            {
+                FillUser();
+
+                TargetApp updated = new TargetApp()
+                {
+                    Name = form["Name"],
+                    UrlString = form["UrlString"],
+                    Interval = Convert.ToInt32(form["Interval"]),
+                    UserId = _user.Id
+                };
+
+
+                 _appService.UpdateApp(updated);
+                 return RedirectToAction("Index", "Panel");
+            }
+            return RedirectToAction("Register", "Home");
+        }
+
+        public IActionResult DeleteApp(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                _appService.DeleteApp(id);
+                return RedirectToAction("Index", "Panel");
+            }
+            return RedirectToAction("Register", "Home");
+        }
+
+        public IActionResult ListLogs()
+        {
+            FillUser();
+            List<Log> logList = new List<Log>();
+            logList = _logService.GetUserLogs(_user.Id);
+            return View(logList);
         }
     }
 }

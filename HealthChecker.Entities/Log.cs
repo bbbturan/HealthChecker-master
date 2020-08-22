@@ -14,5 +14,9 @@ namespace HealthChecker.Entities
         public DateTime Date { get; set; }
         [Display(Name="Error Message")]
         public string ErrorMessage { get; set; }
+
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }

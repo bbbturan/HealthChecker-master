@@ -10,6 +10,7 @@ namespace HealthChecker.Entities
         public User()
         {
             Apps = new List<TargetApp>();
+            Logs = new List<Log>();
         }
 
         public User(string json)
@@ -30,5 +31,6 @@ namespace HealthChecker.Entities
         public string Surname { get; set; }
 
         public ICollection<TargetApp> Apps { get; set; }
+        public ICollection<Log> Logs { get; set; }
     }
 }

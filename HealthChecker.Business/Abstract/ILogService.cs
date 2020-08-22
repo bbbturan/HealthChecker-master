@@ -9,6 +9,8 @@ namespace HealthChecker.Business.Abstract
     {
         List<Log> GetAllLogs();
 
+        List<Log> GetUserLogs(string userId);
+
         Log GetLogById(int id);
 
         Log CreateLog(Log log);
@@ -16,6 +18,7 @@ namespace HealthChecker.Business.Abstract
         Log UpdateLog(Log log);
 
         bool DeleteLog(int id);
+
 
     }
 }

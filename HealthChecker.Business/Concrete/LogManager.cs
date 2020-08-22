@@ -4,6 +4,7 @@ using HealthChecker.DataAccess.Concretes;
 using HealthChecker.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HealthChecker.Business.Concrete
@@ -40,6 +41,12 @@ namespace HealthChecker.Business.Concrete
         public Log UpdateLog(Log log)
         {
             return _logRepository.UpdateLog(log);
+        }
+
+        public List<Log> GetUserLogs(string userId)
+        {
+            var logList = GetAllLogs().ToList();
+            return logList.Where(x => x.UserId == userId).ToList();
         }
     }
 }
