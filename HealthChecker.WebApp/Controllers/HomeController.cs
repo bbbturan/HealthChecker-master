@@ -11,6 +11,7 @@ using HealthChecker.Entities;
 using Newtonsoft.Json;
 using Nancy.Json;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace HealthChecker.WebApp.Controllers
 {
@@ -54,13 +55,31 @@ namespace HealthChecker.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 HttpClient client = _apiHelper.Initial();
-                var content = new JavaScriptSerializer().Serialize(model);
-                var httpContent = new StringContent(content);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await client.PostAsync("api/Users", httpContent);
+
+                var stringModel = await Task.Run(() => JsonConvert.SerializeObject(model));
+                var stringContent = new StringContent(stringModel, Encoding.UTF8, "application/json");
+                HttpResponseMessage res = await client.PostAsync("api/Users", stringContent);
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var result = res.Content.ReadAsStringAsync().Result;
+                    var sur = JsonConvert.DeserializeObject<List<User>>(result);
+                }
                 return RedirectToAction("Index");
             }
-                return RedirectToAction("Register");
+            return RedirectToAction("Register");
+                //var content = new JavaScriptSerializer().Serialize(model);
+
+
+            //    var contentHttp = new FormUrlEncodedContent(new[]
+            //{
+            //    new KeyValuePair<string, string>("UserName", model.UserName),
+            //    new KeyValuePair<string, string>("Name", model.Name),
+            //    new KeyValuePair<string, string>("Surname", model.SurName),
+            //    new KeyValuePair<string, string>("Email", model.Email),
+            //    new KeyValuePair<string, string>("PasswordHash", model.PasswordHash)
+
+            //});
         }
 
         [Authorize]

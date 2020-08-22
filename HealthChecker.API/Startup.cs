@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HealthChecker.API.Handlers;
 using HealthChecker.DataAccess;
 using HealthChecker.Entities;
 using HealthChecker.Services;
@@ -26,9 +25,9 @@ namespace HealthChecker.API
             //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
 
             //services.AddAuthentication("Auth")
-            //    .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Auth", null);
-            //services.AddDbContext<ApplicationContext>();
-            //services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
+                //.AddScheme<AuthenticationSchemeOptions, AuthHandler>("Auth", null);
+            services.AddDbContext<ApplicationContext>();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
             services.AddControllers();
             services.AddSingleton<IHostedService, ChuckFactService>();
             //services.AddSingleton<IHostedService, RequestCollectorService>();

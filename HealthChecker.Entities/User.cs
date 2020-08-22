@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +10,16 @@ namespace HealthChecker.Entities
         public User()
         {
             Apps = new List<TargetApp>();
+        }
+
+        public User(string json)
+        {
+            JObject jObject = JObject.Parse(json);
+            JToken jUser = jObject["User"];
+            Name = (string)jUser["Name"];
+            Surname = (string)jUser["Surname"];
+            PasswordHash = (string)jUser["PasswordHash"];
+            Email = (string)jUser["Email"];
         }
 
         [Display(Name="First Name"), 

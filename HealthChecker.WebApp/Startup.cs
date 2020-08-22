@@ -28,7 +28,7 @@ namespace HealthChecker.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>();
-            services.AddIdentity<Entities.User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
             services.AddControllersWithViews();
             services.AddAuthentication("Auth")
                 .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Auth", null);

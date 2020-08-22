@@ -9,27 +9,23 @@
 <form asp-action="Register" method="post" class="form-signup col-md-4" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Name">@Model.Name</label>
-        <input asp-for="@Model.Name" id="Name" class="form-control" placeholder="First Name" autofocus />
+        <input asp-for="Name" id="Name" class="form-control" placeholder="First Name" autofocus />
     </div>
     <div class="form-group">
         <label asp-for="SurName">@Model.SurName</label>
-        <input asp-for="@Model.SurName" id="SurName" class="form-control" placeholder="Last Name" />
+        <input asp-for="SurName" id="SurName" class="form-control" placeholder="Last Name" />
     </div>
     <div class="form-group">
         <label asp-for="UserName">@Model.UserName</label>
-        <input asp-for="@Model.UserName" id="UserName" class="form-control" placeholder="User Name" />
+        <input asp-for="UserName" id="UserName" class="form-control" placeholder="User Name" />
     </div>
     <div class="form-group">
         <label asp-for="Email">@Model.Email</label>
-        <input asp-for="@Model.Email" id="Email" class="form-control" type="email" placeholder="Email address" />
+        <input asp-for="Email" id="Email" class="form-control" type="email" placeholder="Email address" />
     </div>
     <div class="form-group">
-        <label asp-for="Password">@Model.Password</label>
-        <input asp-for="@Model.Password" id="Password" class="form-control" placeholder="Password" type="password" />
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword">@Model.ConfirmPassword</label>
-        <input asp-for="@Model.ConfirmPassword" id="ConfirmPassword" class="form-control" placeholder="Password" type="password" />
+        <label asp-for="PasswordHash">@Model.PasswordHash</label>
+        <input asp-for="PasswordHash" id="Password" class="form-control" placeholder="Password" type="password" />
     </div>
     <input type="submit" class="btn btn-primary btn-lg btn-block" value="Kayıt Ol" />
 </form>

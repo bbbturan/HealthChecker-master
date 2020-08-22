@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace HealthChecker.API.Controllers
 {
@@ -48,9 +49,11 @@ namespace HealthChecker.API.Controllers
         }
 
         [HttpPost]
-        public async Task Post([FromBody]User user)
+        public async Task Post([FromBody]JsonResult user)
         {
-            var result = await _userManager.CreateAsync(user,user.PasswordHash);
+            string strResult = user.ToString();
+            User usr = new User(strResult);
+            var result = await _userManager.CreateAsync(usr,usr.PasswordHash);
         }
 
     }
