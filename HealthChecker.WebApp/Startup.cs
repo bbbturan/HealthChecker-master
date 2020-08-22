@@ -2,8 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthChecker.DataAccess;
+using HealthChecker.WebApp.Handlers;
+using HealthChecker.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +27,11 @@ namespace HealthChecker.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationContext>();
+            services.AddIdentity<Entities.User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
             services.AddControllersWithViews();
+            services.AddAuthentication("Auth")
+                .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Auth", null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +49,7 @@ namespace HealthChecker.WebApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

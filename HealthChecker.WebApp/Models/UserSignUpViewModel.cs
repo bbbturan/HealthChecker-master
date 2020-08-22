@@ -10,10 +10,7 @@ namespace HealthChecker.WebApp.Models
 
         [Display(Name = "Şifre")]
         [Required(ErrorMessage = "Şifre boş geçilemez.")]
-        public string Password { get; set; }
-
-        [Compare("Password", ErrorMessage = "Şifreler eşleşmiyor.")]
-        public string ConfirmPassword { get; set; }
+        public string PasswordHash { get; set; }
 
         [Display(Name = "Ad")]
         [Required(ErrorMessage = "Ad boş geçilemez.")]

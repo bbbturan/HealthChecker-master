@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HealthChecker.DataAccess\HealthChecker.DataAccess.csproj" />
     <ProjectReference Include="..\HealthChecker.Entities\HealthChecker.Entities.csproj" />
   </ItemGroup>
 

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using HealthChecker.WebApp.Helpers;
 using HealthChecker.Entities;
 using Newtonsoft.Json;
-using System.Web.Extensions;
 using Nancy.Json;
 using System.Net.Http.Headers;
 
@@ -28,7 +27,6 @@ namespace HealthChecker.WebApp.Controllers
             _apiHelper = new ApiHelper();
         }
 
-        [Authorize]
         public async Task<IActionResult> GetUsers()
         {
 
@@ -71,7 +69,6 @@ namespace HealthChecker.WebApp.Controllers
             return View();
         }
 
-        [Authorize]
         public IActionResult Privacy()
         {
             return View();

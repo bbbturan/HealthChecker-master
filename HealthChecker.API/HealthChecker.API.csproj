@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Handlers\**" />
+    <Content Remove="Handlers\**" />
+    <EmbeddedResource Remove="Handlers\**" />
+    <None Remove="Handlers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HealthChecker.Business\HealthChecker.Business.csproj" />
     <ProjectReference Include="..\HealthChecker.Entities\HealthChecker.Entities.csproj" />
   </ItemGroup>

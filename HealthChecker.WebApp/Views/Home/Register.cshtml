@@ -6,26 +6,30 @@
 
 <h1>Register</h1>
 
-<form action="/Home/Register" method="post">
+<form asp-action="Register" method="post" class="form-signup col-md-4" enctype="multipart/form-data">
     <div class="form-group">
-        <label>@Model.Name</label>
-        <input name="@Model.Name" value="" class="form-control" />
+        <label asp-for="Name">@Model.Name</label>
+        <input asp-for="@Model.Name" id="Name" class="form-control" placeholder="First Name" autofocus />
     </div>
     <div class="form-group">
-        <label>@Model.SurName</label>
-        <input name="@Model.SurName" value="" class="form-control" />
+        <label asp-for="SurName">@Model.SurName</label>
+        <input asp-for="@Model.SurName" id="SurName" class="form-control" placeholder="Last Name" />
     </div>
     <div class="form-group">
-        <label>@Model.UserName</label>
-        <input name="@Model.UserName" value="" class="form-control" />
+        <label asp-for="UserName">@Model.UserName</label>
+        <input asp-for="@Model.UserName" id="UserName" class="form-control" placeholder="User Name" />
     </div>
     <div class="form-group">
-        <label>@Model.Email</label>
-        <input name="@Model.Email" value="" class="form-control" />
+        <label asp-for="Email">@Model.Email</label>
+        <input asp-for="@Model.Email" id="Email" class="form-control" type="email" placeholder="Email address" />
     </div>
     <div class="form-group">
-        <label>@Model.Password</label>
-        <input name="@Model.Password" value="" class="form-control" />
+        <label asp-for="Password">@Model.Password</label>
+        <input asp-for="@Model.Password" id="Password" class="form-control" placeholder="Password" type="password" />
     </div>
-    <input type="submit" class="btn btn-primary" value="Kayıt Ol" />
+    <div class="form-group">
+        <label asp-for="ConfirmPassword">@Model.ConfirmPassword</label>
+        <input asp-for="@Model.ConfirmPassword" id="ConfirmPassword" class="form-control" placeholder="Password" type="password" />
+    </div>
+    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Kayıt Ol" />
 </form>

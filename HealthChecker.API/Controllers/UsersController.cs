@@ -13,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthChecker.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -31,7 +30,7 @@ namespace HealthChecker.API.Controllers
             return _userManager.Users.ToList();
         }
 
-        [HttpGet("GetUser")]
+        [HttpGet("GetLoginUser")]
         public async Task<ActionResult<User>> GetLoginUser()
         {
             string emailAddress = HttpContext.User.Identity.Name;
@@ -51,7 +50,7 @@ namespace HealthChecker.API.Controllers
         [HttpPost]
         public async Task Post([FromBody]User user)
         {
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user,user.PasswordHash);
         }
 
     }

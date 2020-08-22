@@ -22,13 +22,17 @@ namespace HealthChecker.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication("Auth")
-                .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Auth", null);
-            services.AddDbContext<ApplicationContext>();
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
+            ///Check this lineee
+            //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
+
+            //services.AddAuthentication("Auth")
+            //    .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Auth", null);
+            //services.AddDbContext<ApplicationContext>();
+            //services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
             services.AddControllers();
             services.AddSingleton<IHostedService, ChuckFactService>();
             //services.AddSingleton<IHostedService, RequestCollectorService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +45,7 @@ namespace HealthChecker.API
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

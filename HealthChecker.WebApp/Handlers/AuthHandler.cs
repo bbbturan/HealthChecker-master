@@ -13,7 +13,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace HealthChecker.API.Handlers
+namespace HealthChecker.WebApp.Handlers
 {
     public class AuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
