@@ -43,6 +43,7 @@ namespace HealthChecker.WebApp.Controllers
             _userManager = userManager;
             _apiHelper = new ApiHelper();
             _appService = new TargetAppManager();
+            _logService = new LogManager();
         }
         
         public  IActionResult Index()
