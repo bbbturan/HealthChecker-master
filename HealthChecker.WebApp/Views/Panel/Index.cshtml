@@ -3,7 +3,9 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 
-    HealthChecker.Entities.TargetApp appModel = new HealthChecker.Entities.TargetApp();
+    List<HealthChecker.Entities.TargetApp> appList = new List<HealthChecker.Entities.TargetApp>();
+    HealthChecker.Business.Concrete.TargetAppManager appManager = new HealthChecker.Business.Concrete.TargetAppManager();
+    appList = appManager.GetAppsByUser(Model.Id);
 
 }
 
@@ -61,20 +63,68 @@
             <th scope="col">Url Name</th>
             <th scope="col">Url String</th>
             <th scope="col">Interval</th>
+            <th scope="col">#</th>
         </tr>
     </thead>
     <tbody>
         @{
             int i = 1;
         }
-        @foreach (var item in Model.Apps)
+        @foreach (var item in appList)
         {
-            <tr>
-                <th scope="row">@i</th>
-                <td>@item.Name</td>
-                <td>@item.UrlString</td>
-                <td>@item.Interval</td>
-            </tr>
+        <tr>
+            <th scope="row">@i</th>
+            <td>@item.Name</td>
+            <td>@item.UrlString</td>
+            <td>@item.Interval</td>
+            <td>
+                <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#editModal">Warning</button>
+                <!-- Modal -->
+                <div class="modal fade" id="editModel" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title col-md-8">Modal Header</h4>
+                                <button type="button" class="close col-md-4" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                @using (Html.BeginForm("CreateApp", "Panel", FormMethod.Post))
+                                {
+                                    <table cellpadding="5">
+                                        <tr>
+                                            <td>Name:</td>
+                                            <td><input type="text" name="Name" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Url String:</td>
+                                            <td><input type="text" name="UrlString" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Time Interval (minutes):</td>
+                                            <td><input type="number" name="Interval" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input type="hidden" name="UserId" value="@Model.Id"/></td>
+                                        </tr>
+                                    </table>
+                                    <br />
+                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit" />
+                                }
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-danger">Danger</button>
+            </td>
+        </tr>
         }
 
     </tbody>
@@ -82,6 +132,9 @@
 
 <script>
     $('#addApp').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+    $('#editModal').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')
     })
 </script>

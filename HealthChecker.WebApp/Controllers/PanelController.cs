@@ -57,13 +57,13 @@ namespace HealthChecker.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 HttpClient client = _apiHelper.Initial();
+                FillUser();
 
                 TargetApp created = new TargetApp() {
                     Name = form["Name"],
                     UrlString = form["UrlString"],
                     Interval = Convert.ToInt32(form["Interval"]),
-                    UserId = _user.Id,
-                    User = new User(_user.ToString())
+                    UserId = _user.Id
                 };
 
                 var stringModel = await Task.Run(() => JsonConvert.SerializeObject(created));

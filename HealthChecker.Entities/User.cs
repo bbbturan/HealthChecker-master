@@ -15,7 +15,7 @@ namespace HealthChecker.Entities
         public User(string json)
         {
             JObject jObject = JObject.Parse(json);
-            JToken jUser = jObject["User"];
+            JToken jUser = jObject["UserName"];
             Name = (string)jUser["Name"];
             Surname = (string)jUser["Surname"];
             PasswordHash = (string)jUser["PasswordHash"];
