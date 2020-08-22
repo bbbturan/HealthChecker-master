@@ -44,11 +44,17 @@ namespace HealthChecker.WebApp.Controllers
             return View(user);
         }
 
+        [HttpGet]
         public IActionResult Register()
         {
             return View(new UserSignUpViewModel());
         }
         
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new UserSignInViewModel());
+        }
 
         [HttpPost]
         public async Task<IActionResult> Login(UserSignInViewModel user)
