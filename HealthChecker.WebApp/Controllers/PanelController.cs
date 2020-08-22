@@ -15,14 +15,21 @@ namespace HealthChecker.WebApp.Controllers
         
         public IActionResult Index()
         {
-            _user = new User()
+            if(Request.Cookies["id"] != null)
             {
-                Id = Request.Cookies["id"].ToString(),
-                UserName = Request.Cookies["username"].ToString(),
-                Email = Request.Cookies["username"].ToString(),
-                PasswordHash = Request.Cookies["password"].ToString(),
-                Apps = new List<TargetApp>(){}
-            };  
+                _user = new User()
+                {
+                    Id = Request.Cookies["id"].ToString(),
+                    UserName = Request.Cookies["username"].ToString(),
+                    Email = Request.Cookies["username"].ToString(),
+                    PasswordHash = Request.Cookies["password"].ToString(),
+                    Apps = new List<TargetApp>(){}
+                };  
+            }
+            else
+            {
+                _user = new User() { };
+            }
 
             ///TO DO
             /// - get all apps from api by userid
