@@ -6,7 +6,7 @@
 
 <h1>Login</h1>
 
-<form asp-action="Register" method="post" class="form-signup col-md-4" enctype="multipart/form-data">
+<form asp-controller="Auth" asp-action="Login" method="post" class="form-signup col-md-4" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="UserName">@Model.UserName</label>
         <input asp-for="UserName" id="UserName" class="form-control" placeholder="First Name" autofocus />

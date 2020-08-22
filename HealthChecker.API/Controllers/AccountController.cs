@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthChecker.API.Models;
 using HealthChecker.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthChecker.Controllers
 {
+    [Route("api/[controller]")]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -20,8 +22,8 @@ namespace HealthChecker.Controllers
         }
 
         [HttpPost]
-        [Route("administrator/register")]
-        public async Task<IActionResult> SignUpPost([FromHeader]User model)
+        [Route("register")]
+        public async Task<IActionResult> SignUpPost([FromBody]UserSignUpViewModel model)
         {
             User user;
             try
@@ -30,6 +32,9 @@ namespace HealthChecker.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
+                    PasswordHash = model.PasswordHash,
+                    Name = model.Name,
+                    Surname = model.SurName
                 };
 
             }
@@ -53,10 +58,10 @@ namespace HealthChecker.Controllers
 
 
         [HttpPost]
-        [Route("administrator/login")]
-        public async Task<IActionResult> SignInPost([FromHeader]User model)
+        [Route("login")]
+        public async Task<IActionResult> SignInPost([FromBody]UserSignInViewModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.PasswordHash, false, true);
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
             if (result.Succeeded)
             {
                 return StatusCode(201);

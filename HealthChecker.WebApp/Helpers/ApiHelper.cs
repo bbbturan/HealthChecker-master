@@ -13,9 +13,10 @@ namespace HealthChecker.WebApp.Helpers
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:59446/");
-            client.DefaultRequestHeaders
-                      .Accept
-                      .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
+            //client.DefaultRequestHeaders
+            //          .Accept
+            //          .Add(new MediaTypeWithQualityHeaderValue("application/json"));
            
 
             return client;
