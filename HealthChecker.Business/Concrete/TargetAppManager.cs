@@ -4,6 +4,7 @@ using HealthChecker.DataAccess.Concretes;
 using HealthChecker.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HealthChecker.Business.Concrete
@@ -35,6 +36,12 @@ namespace HealthChecker.Business.Concrete
         public TargetApp GetAppById(int id)
         {
             return _appRepository.GetAppById(id);
+        }
+
+        public List<TargetApp> GetAppsByUser(string userId)
+        {
+            var appList = GetAllApps();
+            return appList.Where(x => x.UserId == userId).ToList();
         }
 
         public TargetApp UpdateApp(TargetApp app)

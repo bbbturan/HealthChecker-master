@@ -15,6 +15,8 @@ namespace HealthChecker.Business.Abstract
 
         TargetApp UpdateApp(TargetApp app);
 
+        List<TargetApp> GetAppsByUser(string userId);
+
         bool DeleteApp(int id);
     }
 }

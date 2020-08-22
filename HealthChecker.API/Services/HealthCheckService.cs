@@ -1,4 +1,5 @@
-﻿using HealthChecker.Business.Abstract;
+﻿using HealthChecker.API.Services;
+using HealthChecker.Business.Abstract;
 using HealthChecker.Business.Concrete;
 using HealthChecker.Entities;
 using System;
@@ -9,18 +10,19 @@ using System.Threading.Tasks;
 
 namespace HealthChecker.Services
 {
-    public class ChuckFactService : HostedService
+    public class HealthCheckService : HostedService
     {
         HttpClient restClient;
         List<TargetApp> appList = new List<TargetApp>();
-        string icndbUrl = "http://api.icndb.com/jokes/random";
 
         private ITargetAppService _appService;
+        private ILogService _logService;
 
-        public ChuckFactService()
+        public HealthCheckService()
         {
             restClient = new HttpClient();
             _appService = new TargetAppManager();
+            _logService = new LogManager();
         }
         protected override async Task ExecuteAsync(CancellationToken cToken)
         {
@@ -34,13 +36,28 @@ namespace HealthChecker.Services
                     var response = await restClient.GetAsync(item.UrlString, cToken);
                     if (response.IsSuccessStatusCode)
                     {
-                        var fact = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine($"{DateTime.Now.ToString()}\n{fact}");
+                        continue;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Log logResponse = new Log() {
+                                Date = DateTime.Now,
+                                ErrorMessage = response.Content.ToString()
+                            };
+                        
+                            _logService.CreateLog(logResponse);
+                            MailService.SendMail(item.User.Email, "Url Fail", response.StatusCode.ToString());
+                        }
+                        catch (Exception e)
+                        {
+                            var err = e.Message;
+                            throw;
+                        }
                     }
 
                 }
-                ///TO DO
-                /// catch exception and add log 
                 await Task.Delay(TimeSpan.FromSeconds(item.Interval), cToken);
             }
 

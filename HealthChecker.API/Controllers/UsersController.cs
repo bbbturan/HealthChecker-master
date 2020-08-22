@@ -14,7 +14,6 @@ using Newtonsoft.Json.Linq;
 
 namespace HealthChecker.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -26,12 +25,14 @@ namespace HealthChecker.API.Controllers
         }
 
         [HttpGet]
+        [Route("Users/Get")]
         public List<User> Get()
         {
             return _userManager.Users.ToList();
         }
 
         [HttpGet("GetLoginUser")]
+        [Route("Users/GetLoginUser")]
         public async Task<ActionResult<User>> GetLoginUser()
         {
             string emailAddress = HttpContext.User.Identity.Name;
@@ -43,12 +44,14 @@ namespace HealthChecker.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Route("Users/Get")]
         public User Get(string id)
         {
             return _userManager.Users.FirstOrDefault(x => x.Id == id);
         }
 
         [HttpPost]
+        [Route("Users/Post")]
         public async Task Post([FromHeader]string user)
         {
             //Use if get JsonResult parameter

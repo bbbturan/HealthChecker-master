@@ -29,9 +29,16 @@ namespace HealthChecker.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public TargetApp Get(int id)
+        public List<TargetApp> GetAppsByUser(string id)
         {
-            return _appService.GetAppById(id);
+            return _appService.GetAppsByUser(id);
+        }
+
+        [HttpGet("{id}")]
+        public TargetApp Get(string id)
+        {
+            int intId = Convert.ToInt32(id);
+            return _appService.GetAppById(intId);
         }
 
         [HttpPost]
@@ -46,9 +53,10 @@ namespace HealthChecker.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
-            _appService.DeleteApp(id);
+            int intId = Convert.ToInt32(id);
+            _appService.DeleteApp(intId);
         }
     }
 }

@@ -31,8 +31,7 @@ namespace HealthChecker.API
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
             services.AddControllers();
-            services.AddSingleton<IHostedService, ChuckFactService>();
-            //services.AddSingleton<IHostedService, RequestCollectorService>();
+            services.AddSingleton<IHostedService, HealthCheckService>();
 
         }
 
