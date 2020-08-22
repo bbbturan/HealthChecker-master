@@ -61,8 +61,9 @@ namespace HealthChecker.Controllers
         [Route("login")]
         public async Task<IActionResult> SignInPost([FromBody]UserSignInViewModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
-            if (result.Succeeded)
+            var rslt =  _userManager.Users.Where(u => u.Email == model.UserName && u.PasswordHash == model.Password).FirstOrDefault();
+           // var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
+            if (rslt != null )
             {
                 return StatusCode(201);
 

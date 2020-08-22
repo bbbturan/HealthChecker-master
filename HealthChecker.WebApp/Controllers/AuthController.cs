@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using HealthChecker.Entities;
 using HealthChecker.WebApp.Helpers;
 using HealthChecker.WebApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -43,9 +44,11 @@ namespace HealthChecker.WebApp.Controllers
 
                 if (res.IsSuccessStatusCode)
                 {
-                    var result = res.Content.ReadAsStringAsync().Result;
-                    var sur = JsonConvert.DeserializeObject<List<User>>(result);
-                    return RedirectToAction("Index", "Home");
+                    CookieOptions cookie = new CookieOptions();
+                    cookie.Expires = DateTime.Now.AddMinutes(30);
+                    Response.Cookies.Append("email", user.UserName, cookie);
+
+                    return RedirectToAction("Index", "Panel");
                 }
                 else
                 {
@@ -68,9 +71,11 @@ namespace HealthChecker.WebApp.Controllers
 
                 if (res.IsSuccessStatusCode)
                 {
-                    var result = res.Content.ReadAsStringAsync().Result;
-                    var sur = JsonConvert.DeserializeObject<List<User>>(result);
-                    return RedirectToAction("Index", "Home");
+                    CookieOptions cookie = new CookieOptions();
+                    cookie.Expires = DateTime.Now.AddMinutes(30);
+                    Response.Cookies.Append("email", model.UserName, cookie);
+
+                    return RedirectToAction("Index", "Panel");
                 }
                 return RedirectToAction("Register", "Home");
             }

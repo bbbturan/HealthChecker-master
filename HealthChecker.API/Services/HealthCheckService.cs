@@ -58,7 +58,7 @@ namespace HealthChecker.Services
                     }
 
                 }
-                await Task.Delay(TimeSpan.FromSeconds(item.Interval), cToken);
+                await Task.Delay(TimeSpan.FromMinutes(item.Interval), cToken);
             }
 
 
