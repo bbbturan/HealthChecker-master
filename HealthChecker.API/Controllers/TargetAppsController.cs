@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthChecker.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TargetAppsController : ControllerBase

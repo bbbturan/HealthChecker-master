@@ -48,6 +48,28 @@ namespace HealthChecker.WebApp.Controllers
         {
             return View(new UserSignUpViewModel());
         }
+        
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserSignInViewModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                HttpClient client = _apiHelper.Initial();
+
+                var stringModel = await Task.Run(() => JsonConvert.SerializeObject(user));
+                var stringContent = new StringContent(stringModel, Encoding.UTF8);
+                HttpResponseMessage res = await client.PostAsync("api/Users", stringContent);
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var result = res.Content.ReadAsStringAsync().Result;
+                    var sur = JsonConvert.DeserializeObject<List<User>>(result);
+                }
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Register");
+        }
 
         [HttpPost]
         public async Task<IActionResult> Register(UserSignUpViewModel model)
@@ -58,7 +80,7 @@ namespace HealthChecker.WebApp.Controllers
 
                 var stringModel = await Task.Run(() => JsonConvert.SerializeObject(model));
                 var stringContent = new StringContent(stringModel, Encoding.UTF8, "application/json");
-                HttpResponseMessage res = await client.PostAsync("api/Users", stringContent);
+                HttpResponseMessage res = await client.PostAsync("api/Users", stringContent );
 
                 if (res.IsSuccessStatusCode)
                 {
@@ -82,7 +104,6 @@ namespace HealthChecker.WebApp.Controllers
             //});
         }
 
-        [Authorize]
         public IActionResult Index()
         {
             return View();

@@ -1,0 +1,32 @@
+﻿@model HealthChecker.Entities.User
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Url Name</th>
+            <th scope="col">Url String</th>
+            <th scope="col">Interval</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            int i = 1;
+        }
+        @foreach (var item in Model.Apps)
+        {
+            <tr>
+                <th scope="row">@i</th>
+                <td>@item.Name</td>
+                <td>@item.UrlString</td>
+                <td>@item.Interval</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

@@ -38,27 +38,49 @@ namespace HealthChecker.WebApp.Handlers
 
             try
             {
-                var authenticationHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-                var bytes = Convert.FromBase64String(authenticationHeader.Parameter);
-                string[] credentials = Encoding.UTF8.GetString(bytes).Split(":");
-                string emailAddress = credentials[0];
-                string password = credentials[1];
-
-                User user = _userManager.Users.Where(user => user.Email == emailAddress && user.PasswordHash == password).FirstOrDefault();
-                if (user == null) { 
-                    await Context.Response.WriteAsync("Invalid username or password");    
-                    return AuthenticateResult.Fail("Invalid username or password");
-                }
-                else
+                if (Request.Cookies["email"] != null)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, user.Email) };
+                    var claims = new[] { new Claim(ClaimTypes.Name, Request.Cookies["email"]) };
                     var identity = new ClaimsIdentity(claims, Scheme.Name);
                     var principal = new ClaimsPrincipal(identity);
                     var ticket = new AuthenticationTicket(principal, Scheme.Name);
-
-                    await Context.Response.WriteAsync("200 : " + ticket);
                     return AuthenticateResult.Success(ticket);
+                }
 
+
+                else
+                {
+
+                    var authenticationHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+                    var bytes = Convert.FromBase64String(authenticationHeader.Parameter);
+                    string[] credentials = Encoding.UTF8.GetString(bytes).Split(":");
+                    string emailAddress = credentials[0];
+                    string password = credentials[1];
+
+                    User user = _userManager.Users.Where(user => user.Email == emailAddress && user.PasswordHash == password).FirstOrDefault();
+                    if (user == null) { 
+                        await Context.Response.WriteAsync("Invalid username or password");    
+                        return AuthenticateResult.Fail("Invalid username or password");
+                    }
+                    else
+                    {
+                        CookieOptions cookie = new CookieOptions();
+                        cookie.Expires = DateTime.Now.AddMinutes(30);
+                        Response.Cookies.Append("id", user.Id, cookie);
+                        Response.Cookies.Append("email", user.Email, cookie);
+                        Response.Cookies.Append("username", user.UserName, cookie);
+                        Response.Cookies.Append("password", user.PasswordHash, cookie);
+
+
+                        var claims = new[] { new Claim(ClaimTypes.Name, user.Email) };
+                        var identity = new ClaimsIdentity(claims, Scheme.Name);
+                        var principal = new ClaimsPrincipal(identity);
+                        var ticket = new AuthenticationTicket(principal, Scheme.Name);
+
+                        await Context.Response.WriteAsync("200 : " + ticket);
+                        return AuthenticateResult.Success(ticket);
+
+                    }
                 }
 
             }

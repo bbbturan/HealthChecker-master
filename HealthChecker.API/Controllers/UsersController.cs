@@ -49,10 +49,11 @@ namespace HealthChecker.API.Controllers
         }
 
         [HttpPost]
-        public async Task Post([FromBody]JsonResult user)
+        public async Task Post([FromHeader]string user)
         {
-            string strResult = user.ToString();
-            User usr = new User(strResult);
+            //Use if get JsonResult parameter
+            //string strResult = user.ToString();
+            User usr = new User(user);
             var result = await _userManager.CreateAsync(usr,usr.PasswordHash);
         }
 

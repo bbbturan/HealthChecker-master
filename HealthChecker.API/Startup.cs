@@ -23,11 +23,13 @@ namespace HealthChecker.API
         {
             ///Check this lineee
             //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
-
+          
             //services.AddAuthentication("Auth")
-                //.AddScheme<AuthenticationSchemeOptions, AuthHandler>("Auth", null);
+            //.AddScheme<AuthenticationSchemeOptions, AuthHandler>("Auth", null);
             services.AddDbContext<ApplicationContext>();
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>()
+                .AddDefaultTokenProviders();
             services.AddControllers();
             services.AddSingleton<IHostedService, ChuckFactService>();
             //services.AddSingleton<IHostedService, RequestCollectorService>();
@@ -44,7 +46,7 @@ namespace HealthChecker.API
 
             app.UseRouting();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
