@@ -117,7 +117,7 @@ namespace HealthChecker.WebApp.Controllers
             return RedirectToAction("Register", "Home");
         }
 
-        public IActionResult ListLogs()
+        public IActionResult LogList()
         {
             FillUser();
             List<Log> logList = new List<Log>();
