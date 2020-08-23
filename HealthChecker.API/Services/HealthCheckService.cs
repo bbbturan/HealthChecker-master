@@ -44,9 +44,9 @@ namespace HealthChecker.Services
                         {
                             Log logResponse = new Log() {
                                 Date = DateTime.Now,
-                                ErrorMessage = response.Content.ToString()
+                                ErrorMessage = response.Content.ToString(),
+                                UserId = item.UserId
                             };
-                        
                             _logService.CreateLog(logResponse);
                             MailService.SendMail(item.User.Email, "Url Fail", response.StatusCode.ToString());
                         }
