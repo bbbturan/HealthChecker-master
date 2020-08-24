@@ -12,5 +12,5 @@ and if something getting wrong return error log and send information mail to use
 <p>First of all set your own connection settings in <i>'HealthChecker.DataAccess/ApplicationContext'</i> file.</p>
 <h3>Services Settings</h3>
 <h4>Mail Service</h4>
-<p>You have to set your own mail informations and smtp provider. You can file these settings in the <i>"HealthChecker.API/Services/MailService"</i> file.</p>
+<p>You have to set your own mail informations and smtp provider. You can find these settings in the <i>"HealthChecker.API/Services/MailService"</i> file.</p>
 
